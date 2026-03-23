@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=11" />
 </head>
 <body>
   <div id="app">
@@ -142,24 +142,30 @@
     </section>
   </div>
 
-  <!-- 信封打开动画 -->
+  <!-- 信封打开动画：先翻开封面 → 露出信封 → 信封打开 → 信纸滑出 -->
   <div id="envelopeOverlay" class="envelope-overlay hidden" aria-hidden="true">
-    <div class="envelope-stage">
-      <div class="envelope-unit" id="envelopeUnit">
-        <!-- 信纸：初始藏在信封内部 -->
-        <div class="env-paper">
+    <!-- 封面：先出现，点击后向上翻开，露出信封 -->
+    <div class="env-cover" id="envCover">
+      <div class="env-cover-inner">
+        <p class="env-cover-title">一封来自家乡的</p>
+        <p class="env-cover-title env-cover-title--accent">酥 心 来 信</p>
+        <button class="env-cover-btn" id="btnOpenCover">戳我打开</button>
+      </div>
+    </div>
+    <!-- 信封：封面翻走后才出现 -->
+    <div class="env-wrap">
+      <div class="env">
+        <div class="env-bottom"></div>
+        <div class="env-letter">
           <img src="assets/logo.png" alt="" width="120" height="48" decoding="async" />
         </div>
-        <!-- 信封内层（信封底部 + 两侧围边，遮住信纸底部） -->
-        <div class="envelope-inner">
-          <div class="env-fold-line"></div>
+        <div class="env-flap-left"></div>
+        <div class="env-flap-right"></div>
+        <div class="env-flap-bottom"></div>
+        <div class="env-flap-top-wrap">
+          <div class="env-flap-top"></div>
         </div>
-        <!-- 品牌贴纸（信封打开后才显示） -->
-        <div class="env-sticker">
-          <img src="assets/logo.png" alt="" width="68" height="28" decoding="async" />
-        </div>
-        <!-- 信封翻盖（绕顶部翻转） -->
-        <div class="env-flap"></div>
+        <div class="env-seal"></div>
       </div>
       <p class="envelope-caption">一封来自家乡的「酥」信</p>
     </div>
