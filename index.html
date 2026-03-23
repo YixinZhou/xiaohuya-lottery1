@@ -146,14 +146,20 @@
   <div id="envelopeOverlay" class="envelope-overlay hidden" aria-hidden="true">
     <div class="envelope-stage">
       <div class="envelope-unit" id="envelopeUnit">
-        <div class="env env-back"></div>
-        <div class="env env-paper">
+        <!-- 信纸：初始藏在信封内部 -->
+        <div class="env-paper">
           <img src="assets/logo.png" alt="" width="120" height="48" decoding="async" />
         </div>
-        <div class="env env-front">
-          <img class="env-front-logo" src="assets/logo.png" alt="" width="100" height="40" decoding="async" />
+        <!-- 信封内层（信封底部 + 两侧围边，遮住信纸底部） -->
+        <div class="envelope-inner">
+          <div class="env-fold-line"></div>
         </div>
-        <div class="env env-flap"></div>
+        <!-- 品牌贴纸（信封打开后才显示） -->
+        <div class="env-sticker">
+          <img src="assets/logo.png" alt="" width="68" height="28" decoding="async" />
+        </div>
+        <!-- 信封翻盖（绕顶部翻转） -->
+        <div class="env-flap"></div>
       </div>
       <p class="envelope-caption">一封来自家乡的「酥」信</p>
     </div>
