@@ -4,7 +4,7 @@
  */
 (function () {
   /** 兑换券二维码内容（改为门店小程序/H5 领券页等） */
-  var COUPON_QR_URL = "https://www.xiaohuya.com/";
+  var COUPON_QR_URL = "https://yixinzhou.github.io/xiaohuya-lottery1/index.html";
 
   /** 每题正确选项索引：A=0, B=1, C=2 */
   var CORRECT = [1, 0, 2, 1, 0];
@@ -34,10 +34,10 @@
     });
     btn.disabled = true;
 
-    setTimeout(function () { l1.classList.add("is-visible"); }, 200);
-    setTimeout(function () { l2.classList.add("is-visible"); }, 900);
-    setTimeout(function () { l3.classList.add("is-visible"); }, 1700);
-    setTimeout(function () { btn.disabled = false; }, 2300);
+    setTimeout(function () { l1.classList.add("is-visible"); }, 100);
+    setTimeout(function () { l2.classList.add("is-visible"); }, 500);
+    setTimeout(function () { l3.classList.add("is-visible"); }, 900);
+    setTimeout(function () { btn.disabled = false; }, 1200);
   }
 
   function resetQuiz() {
@@ -109,7 +109,7 @@
       overlay.classList.remove("is-open");
       showScreen(8);
       initCouponQr();
-    }, 1600);
+    }, 2400);
   }
 
   $("#btnStart").addEventListener("click", function () {
