@@ -7,22 +7,31 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=1" />
+  <link rel="stylesheet" href="styles.css?v=3" />
 </head>
 <body>
   <div id="app">
     <header class="brand-bar" aria-label="小胡鸭品牌">
       <img class="brand-bar__logo" src="assets/logo.png" width="160" height="56" alt="小胡鸭 XIAO HU DUCK" />
-      <img class="brand-bar__mascot" src="assets/mascot.svg" width="88" height="106" alt="" decoding="async" />
+      <img class="brand-bar__mascot" src="assets/mascot.png" width="96" height="120" alt="" decoding="async" />
     </header>
 
-    <!-- 第一页 -->
+    <!-- 第一页 · 信封感 -->
     <section id="screen-1" class="screen is-active" data-screen="1">
-      <div class="card intro-card">
-        <p class="intro-line intro-line--1" aria-live="polite">小胡鸭来给荆州老乡送信咯~</p>
-        <p class="intro-line intro-line--2" aria-live="polite">你是荆州老乡吗？来进行「荆州老乡认证」确认一下吧</p>
-        <p class="intro-line intro-line--3" aria-live="polite">准备好了吗？</p>
-        <button type="button" id="btnStart" class="btn btn-primary intro-start" disabled>开始</button>
+      <div class="intro-envelope">
+        <div class="intro-envelope__outer" aria-hidden="true">
+          <div class="intro-envelope__flap"></div>
+        </div>
+        <div class="intro-envelope__sheet">
+          <div class="intro-envelope__stamp">
+            <img src="assets/logo.png" alt="" width="72" height="28" decoding="async" />
+          </div>
+          <p class="intro-envelope__deco">──── 来自小胡鸭的信件 ────</p>
+          <p class="intro-line intro-line--1" aria-live="polite">小胡鸭来给荆州老乡送信咯~</p>
+          <p class="intro-line intro-line--2" aria-live="polite">你是荆州老乡吗？来进行「荆州老乡认证」确认一下吧</p>
+          <p class="intro-line intro-line--3" aria-live="polite">准备好了吗？</p>
+          <button type="button" id="btnStart" class="btn btn-primary intro-start" disabled>开始</button>
+        </div>
       </div>
     </section>
 
@@ -126,7 +135,7 @@
               <img src="assets/logo.png" alt="" width="56" height="22" decoding="async" />
             </div>
           </div>
-          <p class="coupon-hint">向店员出示本页二维码即可兑换（演示链接可在 app.js 中修改）</p>
+          <p class="coupon-hint">向店员出示本页二维码即可兑换</p>
         </div>
       </div>
       <button type="button" id="btnSaveImage" class="btn btn-primary btn-block save-btn">保存图片</button>
