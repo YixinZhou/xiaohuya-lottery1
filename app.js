@@ -106,10 +106,10 @@
     $("#btnOpenCover").addEventListener("click", function once() {
       cover.classList.add("is-open");
 
-      // 封面翻走后，触发信封打开 + 信纸滑出
+      // 封面翻走后 350ms，触发信封打开 + 信纸滑出
       setTimeout(function () {
         overlay.classList.add("is-open");
-      }, 450);
+      }, 350);
 
       // 信封动画结束后跳第8页
       setTimeout(function () {
@@ -119,7 +119,7 @@
         cover.classList.remove("is-open");
         showScreen(8);
         initCouponQr();
-      }, 3200);
+      }, 1500);
     });
   }
 
