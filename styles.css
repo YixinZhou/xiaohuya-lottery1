@@ -51,9 +51,11 @@ body {
 
 .brand-bar__mascot {
   flex-shrink: 0;
-  width: min(88px, 22vw);
-  height: auto;
-  filter: drop-shadow(0 4px 10px rgba(242, 92, 25, 0.15));
+  width: auto;
+  height: min(112px, 26vw);
+  max-width: min(96px, 24vw);
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(242, 92, 25, 0.18));
 }
 
 .screen {
@@ -85,7 +87,96 @@ body {
     0 0 0 1px rgba(242, 92, 25, 0.06);
 }
 
-/* ─── 第一页 ─── */
+/* ─── 第一页 · 信封 ─── */
+.intro-envelope {
+  position: relative;
+  margin-top: 8px;
+  padding-top: 22px;
+}
+
+.intro-envelope__outer {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: calc(100% - 8px);
+  max-width: 420px;
+  height: 52px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.intro-envelope__flap {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(165deg, #e8ddd4 0%, #d9cbc0 45%, #cfc0b4 100%);
+  clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+  border-radius: 3px 3px 0 0;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.35),
+    0 4px 14px rgba(43, 24, 16, 0.12);
+}
+
+.intro-envelope__sheet {
+  position: relative;
+  z-index: 1;
+  margin-top: 18px;
+  padding: 26px 20px 26px;
+  border-radius: 6px 6px 18px 18px;
+  background-color: #fffefb;
+  background-image:
+    repeating-linear-gradient(
+      transparent,
+      transparent 1.55em,
+      rgba(242, 92, 25, 0.07) 1.55em,
+      rgba(242, 92, 25, 0.07) calc(1.55em + 1px)
+    ),
+    linear-gradient(180deg, rgba(255, 252, 248, 0.98) 0%, #faf6f0 100%);
+  border: 1px solid rgba(210, 190, 170, 0.55);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 14px 36px rgba(43, 24, 16, 0.1),
+    0 4px 12px rgba(242, 92, 25, 0.08);
+}
+
+.intro-envelope__stamp {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  padding: 8px 10px;
+  border: 2px dashed rgba(242, 92, 25, 0.45);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.85);
+  transform: rotate(-5deg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  z-index: 2;
+}
+
+.intro-envelope__stamp img {
+  display: block;
+  width: 72px;
+  height: auto;
+  max-height: 32px;
+  object-fit: contain;
+}
+
+.intro-envelope__deco {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: #b8a090;
+  text-align: center;
+  margin-bottom: 18px;
+  padding: 0 88px 0 8px;
+  font-weight: 600;
+}
+
+@media (max-width: 360px) {
+  .intro-envelope__deco {
+    padding-right: 8px;
+    padding-top: 52px;
+  }
+}
+
 .intro-line {
   font-size: 1.05rem;
   font-weight: 700;
@@ -106,7 +197,7 @@ body {
 }
 
 .intro-start {
-  margin-top: 10px;
+  margin-top: 14px;
   width: 100%;
 }
 
