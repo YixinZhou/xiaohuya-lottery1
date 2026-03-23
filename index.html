@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>荆州老乡认证 · 小胡鸭</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=1" />
+</head>
+<body>
+  <div id="app">
+    <header class="brand-bar" aria-label="小胡鸭品牌">
+      <img class="brand-bar__logo" src="assets/logo.png" width="160" height="56" alt="小胡鸭 XIAO HU DUCK" />
+      <img class="brand-bar__mascot" src="assets/mascot.svg" width="88" height="106" alt="" decoding="async" />
+    </header>
+
+    <!-- 第一页 -->
+    <section id="screen-1" class="screen is-active" data-screen="1">
+      <div class="card intro-card">
+        <p class="intro-line intro-line--1" aria-live="polite">小胡鸭来给荆州老乡送信咯~</p>
+        <p class="intro-line intro-line--2" aria-live="polite">你是荆州老乡吗？来进行「荆州老乡认证」确认一下吧</p>
+        <p class="intro-line intro-line--3" aria-live="polite">准备好了吗？</p>
+        <button type="button" id="btnStart" class="btn btn-primary intro-start" disabled>开始</button>
+      </div>
+    </section>
+
+    <!-- 题目 1–5：screen 2–6 -->
+    <section id="screen-2" class="screen" data-screen="2" data-q="0">
+      <div class="card quiz-card">
+        <p class="quiz-title">请给荆州方言选择正确的含义</p>
+        <p class="quiz-word">1. 滴嘎</p>
+        <div class="options" role="group" aria-label="第1题选项">
+          <button type="button" class="opt" data-index="0">A. 水滴</button>
+          <button type="button" class="opt" data-index="1">B. 一点</button>
+          <button type="button" class="opt" data-index="2">C. 小鸭子</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-3" class="screen" data-screen="3" data-q="1">
+      <div class="card quiz-card">
+        <p class="quiz-title">请给荆州方言选择正确的含义</p>
+        <p class="quiz-word">2. 么斯</p>
+        <div class="options" role="group" aria-label="第2题选项">
+          <button type="button" class="opt" data-index="0">A. 什么</button>
+          <button type="button" class="opt" data-index="1">B. 现在</button>
+          <button type="button" class="opt" data-index="2">C. 不要</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-4" class="screen" data-screen="4" data-q="2">
+      <div class="card quiz-card">
+        <p class="quiz-title">请给荆州方言选择正确的含义</p>
+        <p class="quiz-word">3. 区区拱拱</p>
+        <div class="options" role="group" aria-label="第3题选项">
+          <button type="button" class="opt" data-index="0">A. 小角落</button>
+          <button type="button" class="opt" data-index="1">B. 很用力的推搡</button>
+          <button type="button" class="opt" data-index="2">C. 讲小话</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-5" class="screen" data-screen="5" data-q="3">
+      <div class="card quiz-card">
+        <p class="quiz-title">请给荆州方言选择正确的含义</p>
+        <p class="quiz-word">4. 鸟鹊子</p>
+        <div class="options" role="group" aria-label="第4题选项">
+          <button type="button" class="opt" data-index="0">A. 鸟窝</button>
+          <button type="button" class="opt" data-index="1">B. 鸟</button>
+          <button type="button" class="opt" data-index="2">C. 喜鹊</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-6" class="screen" data-screen="6" data-q="4">
+      <div class="card quiz-card">
+        <p class="quiz-title">请给荆州方言选择正确的含义</p>
+        <p class="quiz-word">5. 刹孩</p>
+        <div class="options" role="group" aria-label="第5题选项">
+          <button type="button" class="opt" data-index="0">A. 拖鞋</button>
+          <button type="button" class="opt" data-index="1">B. 小孩子</button>
+          <button type="button" class="opt" data-index="2">C. 螺丝</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 第七页：成绩 + 答案 -->
+    <section id="screen-7" class="screen" data-screen="7">
+      <div class="card result-card">
+        <div class="result-top">
+          <p class="result-congrats">恭喜您答对</p>
+          <p id="scorePercent" class="result-percent">（正确率 — 0%）</p>
+        </div>
+        <div class="result-answers">
+          <h2 class="result-answers__title">答案揭晓</h2>
+          <ol class="answer-list">
+            <li><strong>滴嘎</strong> — 一点<br /><span class="muted">我滴噶都不喜欢。 — 我一点都不喜欢。</span></li>
+            <li><strong>么斯</strong> — 什么<br /><span class="muted">你说么斯？ — 你说什么？</span></li>
+            <li><strong>区区拱拱</strong> — 讲小话<br /><span class="muted">在教室里不要区区拱拱。 — 在教室里不要讲小话。</span></li>
+            <li><strong>鸟鹊子</strong> — 鸟<br /><span class="muted">房顶上有鸟鹊子。 — 房顶上有鸟。</span></li>
+            <li><strong>刹孩</strong> — 拖鞋<br /><span class="muted">我的刹孩呢？ — 我的拖鞋呢？</span></li>
+          </ol>
+        </div>
+        <div id="resultActions100" class="result-actions hidden">
+          <button type="button" id="btnOpenLetter" class="btn btn-primary btn-block">请查收小胡鸭给您的「酥」信</button>
+        </div>
+        <div id="resultActionsFail" class="result-actions hidden">
+          <p class="fail-msg">很抱歉您没通过认证</p>
+          <button type="button" id="btnRetry" class="btn btn-outline btn-block">再来一遍</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 第八页：兑换券 -->
+    <section id="screen-8" class="screen" data-screen="8">
+      <div id="couponCapture" class="coupon-wrap">
+        <div class="card coupon-card">
+          <p class="coupon-lead">小胡鸭送您一份「荆州记忆礼包」优惠券</p>
+          <p class="coupon-sub">还有神秘贺卡等着您哦~</p>
+          <div class="coupon-qr-box">
+            <div id="couponQr" aria-label="兑换二维码"></div>
+            <div class="coupon-qr-logo" aria-hidden="true">
+              <img src="assets/logo.png" alt="" width="56" height="22" decoding="async" />
+            </div>
+          </div>
+          <p class="coupon-hint">向店员出示本页二维码即可兑换（演示链接可在 app.js 中修改）</p>
+        </div>
+      </div>
+      <button type="button" id="btnSaveImage" class="btn btn-primary btn-block save-btn">保存图片</button>
+    </section>
+  </div>
+
+  <!-- 信封打开动画 -->
+  <div id="envelopeOverlay" class="envelope-overlay hidden" aria-hidden="true">
+    <div class="envelope-stage">
+      <div class="envelope-unit" id="envelopeUnit">
+        <div class="env env-back"></div>
+        <div class="env env-paper">
+          <img src="assets/logo.png" alt="" width="120" height="48" decoding="async" />
+        </div>
+        <div class="env env-front">
+          <img class="env-front-logo" src="assets/logo.png" alt="" width="100" height="40" decoding="async" />
+        </div>
+        <div class="env env-flap"></div>
+      </div>
+      <p class="envelope-caption">一封来自家乡的「酥」信</p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="app.js?v=2"></script>
+</body>
+</html>
