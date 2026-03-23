@@ -96,20 +96,31 @@
 
   function openEnvelopeThenPage8() {
     var overlay = $("#envelopeOverlay");
+    var cover = $("#envCover");
     overlay.classList.remove("hidden");
     overlay.setAttribute("aria-hidden", "false");
     overlay.classList.remove("is-open");
-    void overlay.offsetWidth;
-    requestAnimationFrame(function () {
-      overlay.classList.add("is-open");
+    cover.classList.remove("is-open");
+
+    // 点击封面按钮，翻开封面，露出信封
+    $("#btnOpenCover").addEventListener("click", function once() {
+      cover.classList.add("is-open");
+
+      // 封面翻走后，触发信封打开 + 信纸滑出
+      setTimeout(function () {
+        overlay.classList.add("is-open");
+      }, 450);
+
+      // 信封动画结束后跳第8页
+      setTimeout(function () {
+        overlay.classList.add("hidden");
+        overlay.removeAttribute("aria-hidden");
+        overlay.classList.remove("is-open");
+        cover.classList.remove("is-open");
+        showScreen(8);
+        initCouponQr();
+      }, 3200);
     });
-    setTimeout(function () {
-      overlay.classList.add("hidden");
-      overlay.removeAttribute("aria-hidden");
-      overlay.classList.remove("is-open");
-      showScreen(8);
-      initCouponQr();
-    }, 2400);
   }
 
   $("#btnStart").addEventListener("click", function () {
