@@ -429,200 +429,259 @@ body {
   max-width: 480px;
 }
 
-/* ─── 信封全屏动画 ─── */
+/* ─── 动画流程：翻开封面 → 露出信封 → 信封开 → 信纸滑出 ─── */
 .envelope-overlay {
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: rgba(35, 24, 18, 0.72);
-  backdrop-filter: blur(5px);
+  background: rgba(30, 20, 15, 0.82);
+  backdrop-filter: blur(6px);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 24px;
-  animation: envFade 0.25s ease;
 }
 
 .envelope-overlay.hidden {
   display: none;
 }
 
-@keyframes envFade {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-.envelope-stage {
-  perspective: 900px;
-  text-align: center;
-}
-
-.envelope-caption {
-  margin-top: 20px;
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
-  opacity: 0;
-  transition: opacity 0.4s ease 1.4s;
-}
-
-.envelope-overlay.is-open .envelope-caption {
-  opacity: 1;
-}
-
-/* 信封单元 */
-.envelope-unit {
-  position: relative;
-  width: min(280px, 78vw);
-  height: 200px;
-  margin: 0 auto;
-  transform-style: preserve-3d;
-  overflow: visible;
-}
-
-/* 信封内部（信封底部 + 两侧围起，内部空间隐藏信纸底部） */
-.envelope-inner {
+/* ── 封面卡：整张卡片翻开，露出信封 ── */
+.env-cover {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 120px;
-  border-radius: 8px;
-  background: linear-gradient(180deg, #f7e8d5 0%, #eddcba 100%);
-  overflow: hidden;
-  box-shadow:
-    inset 0 -2px 0 rgba(0,0,0,0.07),
-    0 8px 24px rgba(0,0,0,0.25);
-  z-index: 2;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  transition: z-index 0s linear .85s;
 }
 
-/* 信封内两侧遮边（制造信封两侧封口视觉效果） */
-.envelope-inner::before,
-.envelope-inner::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 28px;
-  background: linear-gradient(90deg, rgba(0,0,0,0.08) 0%, transparent 100%);
-  z-index: 3;
-}
-.envelope-inner::after {
-  right: 0;
-  background: linear-gradient(270deg, rgba(0,0,0,0.08) 0%, transparent 100%);
-}
-
-/* 信封底部的 V 形折痕装饰（压住信纸底部） */
-.env-fold-line {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background: linear-gradient(160deg, #e6d0a8 0%, #dbbf90 100%);
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 68%, 0 100%);
-  z-index: 4;
+.env-cover.is-open {
+  z-index: 1;
   pointer-events: none;
 }
 
-/* 信封盖子（倒梯形，上宽下窄，绕顶部翻转打开） */
-.env-flap {
+.env-cover-inner {
+  width: 270px;
+  padding: 48px 32px 40px;
+  background: linear-gradient(155deg, #f5e8d5 0%, #e8d0b0 50%, #c9a882 100%);
+  border-radius: 16px;
+  text-align: center;
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -3px 8px rgba(0, 0, 0, 0.06);
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  transition: transform .85s cubic-bezier(.3, 0, .15, 1);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.env-cover.is-open .env-cover-inner {
+  transform: rotateX(-105deg) translateZ(-20px);
+}
+
+.env-cover-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #6b3f20;
+  line-height: 1.5;
+  letter-spacing: .04em;
+  margin: 0 0 6px;
+}
+
+.env-cover-title--accent {
+  font-size: 2rem;
+  color: #c9400a;
+  margin-bottom: 32px;
+}
+
+.env-cover-btn {
+  background: linear-gradient(135deg, #e8500a 0%, #c9400a 100%);
+  color: #fff;
+  border: none;
+  padding: 12px 36px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(201, 64, 10, 0.35);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.env-cover-btn:hover {
+  transform: scale(1.04);
+  box-shadow: 0 6px 20px rgba(201, 64, 10, 0.45);
+}
+
+/* ── 信封外层 ── */
+.env-wrap {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .4s ease .75s, transform .4s ease .75s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.env-cover.is-open ~ .env-wrap,
+.envelope-overlay.is-open .env-wrap {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 信封整体 */
+.env {
+  position: relative;
+  width: 260px;
+  height: 170px;
+  perspective: 900px;
+  perspective-origin: 50% 42%;
+}
+
+/* 信封底座 */
+.env-bottom {
   position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: linear-gradient(165deg, #e8d0b0 0%, #c9a882 50%, #a07850 100%);
+  box-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.35),
+    inset 0 2px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -3px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* 信纸 */
+.env-letter {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: 0;
+  height: 68%;
+  background: #fffdf5;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+  transform: translateY(90%);
+  transition: transform .75s cubic-bezier(.3, .8, .2, 1) 0s;
+}
+
+.env-letter img {
+  opacity: 0.9;
+}
+
+.env-flap-left {
+  position: absolute;
+  left: 0;
   top: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(115deg, #f0ddc0 0%, #d4b894 55%, #b89068 100%);
+  clip-path: polygon(0 0, 0 100%, 100% 52%);
+  z-index: 3;
+}
+
+.env-flap-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(245deg, #f0ddc0 0%, #d4b894 55%, #b89068 100%);
+  clip-path: polygon(100% 0, 100% 100%, 0 52%);
+  z-index: 3;
+}
+
+.env-flap-bottom {
+  position: absolute;
   left: 0;
   right: 0;
-  height: 90px;
+  bottom: 0;
+  height: 52%;
+  background: linear-gradient(180deg, #e0c8a8 0%, #c4a070 100%);
+  clip-path: polygon(0 100%, 100% 100%, 50% 52%);
+  z-index: 4;
+}
+
+.env-flap-top-wrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 52%;
+  transform-style: preserve-3d;
   z-index: 5;
+  transition: z-index 0s linear .38s;
+}
+
+.envelope-overlay.is-open .env-flap-top-wrap {
+  z-index: 2;
+}
+
+.env-flap-top {
+  position: absolute;
+  inset: 0;
   transform-origin: top center;
   transform: rotateX(0deg);
-  transition: transform 0.8s cubic-bezier(0.35, 0, 0.25, 1);
-}
-
-.env-flap::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  /* 倒梯形 flap */
-  background: linear-gradient(180deg, #f0e0c8 0%, #e0cc9c 100%);
-  clip-path: polygon(8% 100%, 92% 100%, 100% 0, 0% 0);
-  border-radius: 6px 6px 0 0;
+  transition: transform .8s cubic-bezier(.3, 0, .15, 1);
+  background: linear-gradient(184deg, #f5e8d0 0%, #dbbf98 38%, #c4a070 100%);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
   box-shadow:
-    inset 0 2px 0 rgba(255,255,255,0.45),
-    inset 0 -2px 6px rgba(0,0,0,0.07),
-    0 -2px 8px rgba(0,0,0,0.06);
+    inset 0 2px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -6px 14px rgba(0, 0, 0, 0.06);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
-/* 翻盖内侧（打开时露出里面颜色） */
-.env-flap::after {
-  content: '';
+.envelope-overlay.is-open .env-flap-top {
+  transform: rotateX(-178deg) translateZ(-36px);
+}
+
+.env-seal {
   position: absolute;
-  inset: 0;
-  background: #d4b880;
-  clip-path: polygon(8% 100%, 92% 100%, 100% 0, 0% 0);
-  border-radius: 6px 6px 0 0;
-}
-
-/* 打开信封：盖子翻到背后 */
-.envelope-overlay.is-open .env-flap {
-  transform: rotateX(-165deg);
-}
-
-/* 信纸：初始藏在信封内部，底部被内层挡住 */
-.env-paper {
-  position: absolute;
-  bottom: 10px;
-  left: 12px;
-  right: 12px;
-  height: 100px;
-  background: #fffdf7;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.14);
-  z-index: 1;
-  transform: translateY(0);
-  transition:
-    transform 0.9s cubic-bezier(0.25, 0.8, 0.4, 1) 0.15s,
-    box-shadow 0.4s ease;
-}
-
-.env-paper img {
-  opacity: 0.85;
-}
-
-/* 信封打开：信纸从内部滑出并放大 */
-.envelope-overlay.is-open .env-paper {
-  transform: translateY(-90px) scale(1.05);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.22);
-}
-
-/* 信封正面贴纸区域（信封打开后，露出品牌 Logo 贴纸） */
-.env-sticker {
-  position: absolute;
-  bottom: 60px;
   left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 36px;
-  background: rgba(255,255,255,0.95);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  z-index: 1;
-  opacity: 0;
-  transition: opacity 0.4s ease 1s;
-}
-.env-sticker img {
-  width: 68px;
-  height: auto;
-  object-fit: contain;
+  top: 52%;
+  width: 38px;
+  height: 38px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, #fff4cc 0%, #d4900a 40%, #7a5010 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35), inset 0 -2px 4px rgba(0,0,0,.2), inset 0 2px 3px rgba(255,255,255,.4);
+  z-index: 6;
+  transition: opacity .3s ease .04s, transform .3s ease .04s;
 }
 
-.envelope-overlay.is-open .env-sticker {
+.envelope-overlay.is-open .env-seal {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(.4);
+  pointer-events: none;
+}
+
+.envelope-overlay.is-open .env-letter {
+  transform: translateY(-102%) translateZ(48px) scale(1.04);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.35);
+}
+
+.envelope-caption {
+  margin-top: 28px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transition: opacity .5s ease 1.3s;
+}
+
+.envelope-overlay.is-open .envelope-caption {
   opacity: 1;
 }
